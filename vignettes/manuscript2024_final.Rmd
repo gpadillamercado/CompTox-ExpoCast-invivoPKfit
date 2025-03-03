@@ -2781,6 +2781,10 @@ saveRDS(pk_study,
 Get TK statistics for the winning models. Do them dose-normalized so that they won't vary by dose. Keep only halflife and Vss, which shouldn't vary by Route and Media.
 
 ```{r}
+pk_study <- readRDS(paste0(Sys.getenv("OD_DIR"),
+               '28February2025',
+               "studylevel_pk_fit_110p.Rds"))
+
 tkstats_study <- eval_tkstats(pk_study,
                               finite_only = FALSE,
                               dose_norm = TRUE,
@@ -2830,7 +2834,7 @@ For comparison, read in the saved data from the best options with pooled data. G
 
 ```{r}
   file_str <- paste0(Sys.getenv("OD_DIR"),
-                     read_date_pk,
+                     '25November2024',
                      "mypk_fit_110p.Rds")
   pk_pooled <- readRDS(file = file_str)
   
@@ -3046,8 +3050,8 @@ ggsave(paste0(Sys.getenv("FIG_DIR"),
        width = 7)
 
 ggsave(paste0(Sys.getenv("FIG_DIR"),
-              today,
               "Manu_Files/",
+                            today,
               "_Fig8.pdf"),
        height = 5,
        width = 7)
