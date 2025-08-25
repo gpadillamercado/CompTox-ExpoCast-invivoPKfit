@@ -3,12 +3,12 @@
 #' Fit PK model(s) for a `pk` object
 #'
 #' This function estimates the parameters for each model in `stat_model` from
-#' the data, using numerical optimization implemented in [optimx::optimx()]. The
+#' the data, using numerical optimization implemented in [optimx::opm()]. The
 #' optimization is done by maximizing the log-likelihood function implemented in
 #' [log_likelihood()] (technically, by minimizing the negative log-likelihood).
 #' Only the non-excluded observations are used.
 #'
-#' Due to limitations of [optimx::optimx()], the log-likelihood function is
+#' Due to limitations of [optimx::opm()], the log-likelihood function is
 #' forced to return finite values during this optimization. Impossible
 #' combinations of parameters (e.g., parameter values that produce negative
 #' predicted concentrations) should have a log-likelihood of `-Inf`, but due to
@@ -23,19 +23,20 @@
 #' [AIC()], which check the log-likelihood *without* forcing it to return finite
 #' values.
 #'
+#' @section Parallel Processing:
+#' Please set [mirai::daemons()] if you intend to take advantage of parallel processing.
+#' If [mirai::daemons()] are set, this function will use [mirai::mirai_map()]
+#' if none are set, then sequential iteration will occur. Distinct progress bars are
+#' displayed depending on whether parallel processing is used. Please remember to
+#' run `mirai::daemons(0L)` afterwards. See `mirai` package documentation for more details.
+#'
 #' @inheritParams do_preprocess.pk
-#' @param async Logical (Default: FALSE). Whether to use for parallel computing with
-#'  the [mirai::mirai_map()] framework. If FALSE and [mirai::daemons()] are set, will use
-#'  new parallel processing in [purrr::in_parallel()] or if none are set, then sequential
-#'  iteration will occur. Progress bars are displayed if TRUE, or if not using parallel
-#'  processing.
 #' @param rate_names The names of the rate units. Leave NULL to utilize default 1/hour.
 #' @return The same [pk] object, with element `fit` containing the fitted
 #'   results for each model in `stat_model`.
 #' @export
 #' @author Caroline Ring, Gilberto Padilla Mercado
 do_fit.pk <- function(obj,
-                      async = FALSE,
                       rate_names = NULL,
                       ...) {
   # check status
@@ -69,20 +70,9 @@ do_fit.pk <- function(obj,
     obj <- do_prefit(obj)
   }
 
-  # Check async capability
-  if (async && isFALSE(mirai::daemons_set())) {
-    cli::cli_warn(c(
-      "!" = paste(
-        "Remember to run",
-        "{.run [mirai::everywhere(library(invivoPKfit))](mirai::everywhere())} ",
-        "after setting number of daemons."
-      )
-    ))
-    mirai::require_daemons() # Will error out of function.
-  }
-
   if (isTRUE(mirai::daemons_set())) {
     cli::cli_inform("Using parallel or asynchronous processing!")
+    mirai::everywhere(library(invivoPKfit))
   }
 
   # pull the non-excluded observations for fitting
@@ -171,7 +161,7 @@ do_fit.pk <- function(obj,
 
   cli_inform("do_fit.pk(): Begin fitting for model{?s}: {fun_models$model}")
 
-  if (async && isTRUE(mirai::daemons_set())) {
+  if (isTRUE(mirai::daemons_set())) {
     info_prep <- info_nest |>
       dplyr::mutate(
         settings_optimx = list(this_settings_optimx),
@@ -208,22 +198,19 @@ do_fit.pk <- function(obj,
         log10_trans = log10_trans,
         suppress.messages = TRUE
       ),
-      .f = purrr::in_parallel(
-        \(data, par_DF, sigma_DF,
+      .f = \(data, par_DF, sigma_DF,
+             fit_decision, this_model,
+             settings_optimx, modelfun,
+             dose_norm, log10_trans,
+             suppress.messages) {
+        fit_group(
+          data, par_DF, sigma_DF,
           fit_decision, this_model,
           settings_optimx, modelfun,
           dose_norm, log10_trans,
-          suppress.messages) {
-          fit_group(
-            data, par_DF, sigma_DF,
-            fit_decision, this_model,
-            settings_optimx, modelfun,
-            dose_norm, log10_trans,
-            suppress.messages
-          )
-        },
-        fit_group = fit_group
-      ),
+          suppress.messages
+        )
+      },
       .progress = list(
         type = "iterator",
         format = "Fitting... {cli::pb_bar} {cli::pb_current}/{cli::pb_total} [{cli::pb_elapsed}]",
