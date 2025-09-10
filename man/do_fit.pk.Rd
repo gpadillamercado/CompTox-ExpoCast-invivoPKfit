@@ -4,19 +4,14 @@
 \alias{do_fit.pk}
 \title{Do fitting}
 \usage{
-\method{do_fit}{pk}(obj, n_cores = NULL, rate_names = NULL, max_multiplier = NULL, ...)
+\method{do_fit}{pk}(obj, rate_names = NULL, ...)
 }
 \arguments{
-\item{obj}{A [pk] object.}
-
-\item{n_cores}{Number of cores used for parallel computing.}
+\item{obj}{A `pk` object}
 
 \item{rate_names}{The names of the rate units. Leave NULL to utilize default 1/hour.}
 
-\item{max_multiplier}{Numeric value for upper prediction limit (this number multiplied
-by maximum concentrations in each experiment). Default set to NULL does not apply this limit.}
-
-\item{...}{Additional arguments. Not currently in use.}
+\item{...}{Additional arguments. Not in use currently.}
 }
 \value{
 The same [pk] object, with element `fit` containing the fitted
@@ -27,12 +22,12 @@ Fit PK model(s) for a `pk` object
 }
 \details{
 This function estimates the parameters for each model in `stat_model` from
-the data, using numerical optimization implemented in [optimx::optimx()]. The
+the data, using numerical optimization implemented in [optimx::opm()]. The
 optimization is done by maximizing the log-likelihood function implemented in
 [log_likelihood()] (technically, by minimizing the negative log-likelihood).
 Only the non-excluded observations are used.
 
-Due to limitations of [optimx::optimx()], the log-likelihood function is
+Due to limitations of [optimx::opm()], the log-likelihood function is
 forced to return finite values during this optimization. Impossible
 combinations of parameters (e.g., parameter values that produce negative
 predicted concentrations) should have a log-likelihood of `-Inf`, but due to
@@ -47,6 +42,15 @@ log-likelihood using [logLik()] and the Akaike Information Criterion using
 [AIC()], which check the log-likelihood *without* forcing it to return finite
 values.
 }
+\section{Parallel Processing}{
+
+Please set [mirai::daemons()] if you intend to take advantage of parallel processing.
+If [mirai::daemons()] are set, this function will use [mirai::mirai_map()]
+if none are set, then sequential iteration will occur. Distinct progress bars are
+displayed depending on whether parallel processing is used. Please remember to
+run `mirai::daemons(0L)` afterwards. See `mirai` package documentation for more details.
+}
+
 \author{
 Caroline Ring, Gilberto Padilla Mercado
 }
