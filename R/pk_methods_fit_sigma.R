@@ -47,10 +47,9 @@ fit_sigma.pk <- function(obj, preds, pred_col, k = 2, ...) {
   dose_norm <- obj$scales$conc$dose_norm
   log10_trans <- obj$scales$conc$log10_trans
 
-  # Needs more flexible naming checks, fix in future commits
   req_names <- c(
     "Chemical", "Species", "Dose", "Route", "Media", "Reference",
-    "N_Subjects", "pLOQ", "Time", "Conc", "Conc_trans", "Conc_SD",
+    "N_Subjects", "pLOQ", "Time", "Time_trans", "Conc", "Conc_SD",
     "data_sigma_group", "Detect", "exclude"
   )
 
@@ -70,7 +69,7 @@ fit_sigma.pk <- function(obj, preds, pred_col, k = 2, ...) {
 
 
   # Inner join the predictions and observations (there should be a lot of overlap)
-  sigma_df <- obj$prefit$stat_error_model$sigma_DF |>
+  sigma_df <- obj$prefit$sigma_DF |>
     dplyr::select(!!!data_grp, "data_sigma_group" = param_name,
                   lower_bound, upper_bound, start) |>
     dplyr::distinct()
@@ -123,7 +122,6 @@ fit_sigma.pk <- function(obj, preds, pred_col, k = 2, ...) {
                 const_params = NULL,
                 data = x$data,
                 data_sigma_group = x$data$data_sigma_group,
-                modelfun = pred_col,
                 dose_norm = dose_norm,
                 log10_trans = log10_trans,
                 negative = TRUE,
