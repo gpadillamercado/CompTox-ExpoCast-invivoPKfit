@@ -11,7 +11,7 @@ and NHEERL, and fits parameters of 1-compartment and 2-compartment models
 for each chemical.
 }
 \author{
-\strong{Maintainer}: John Wambaugh \email{wambaugh.john@epa.gov} (\href{https://orcid.org/0000-0002-4024-534X}{ORCID})
+\strong{Maintainer}: John Wambaugh \email{wambaugh.research@gmail.com} (\href{https://orcid.org/0000-0002-4024-534X}{ORCID})
 
 Authors:
 \itemize{
