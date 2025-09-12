@@ -322,6 +322,9 @@ my_tkstats |> glimpse()
 
 You can extract the best-fit "winning" model for each data group and each optimization method -- determined by which one had the lowest AIC.
 
+
+**Note: If the flat model is the winning model, it should be considered a flag to investigate potential underlying problems with the CvT data, and/or possible model mis-specification — for example, dose-dependent kinetics not captured by the model.**
+
 ```{r}
 wm <- get_winning_model(my_pk)
 wm
@@ -548,6 +551,9 @@ This instructs `invivopkfit` on whether and how to try to impute missing values 
 ## Data information settings
 
 `my_pk$pk_groups$nca_group` instructs `invivopkfit` on how to group data for calculation of summary statistics, including non-compartmental analysis (NCA).
+Data will be split into groups according to unique combinations of the variables
+specified in `nca_group`.
+Then, non-compartmental analysis will be performed for each group using `PK::nca()`.
 
 In other words, 
 
@@ -1085,9 +1091,11 @@ pk2 <- my_pk + scale_conc(dose_norm = FALSE, log10_trans = TRUE)
 pk3 <- my_pk + scale_conc(dose_norm = TRUE, log10_trans = TRUE)
 
 # do fits
-pk1 <- do_fit(pk1, n_cores = parallel::detectCores() - 1)
-pk2 <- do_fit(pk2, n_cores = parallel::detectCores() - 1)
-pk3 <- do_fit(pk3, n_cores = parallel::detectCores() - 1)
+mirai::daemons(4L)
+pk1 <- do_fit(pk1)
+pk2 <- do_fit(pk2)
+pk3 <- do_fit(pk3)
+mirai::daemons(0L)
 ```
 
 Plot the results.
