@@ -18,7 +18,3 @@ converts them to simple ASCII equivalent. This can be important for
 cross-compatibility with other databases and systems that use simple
 apostrophes `'` and quotes `"` instead of curly quotes or prime symbols.
 }
-\examples{
-try(cat(invivoPKfit:::force_ascii_quotes("3,3’,4,4′-tetrachloro-5-biphenylol")))
-
-}
