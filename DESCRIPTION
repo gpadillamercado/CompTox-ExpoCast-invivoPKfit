@@ -3,10 +3,10 @@ Package: invivoPKfit
 Title: Fits Toxicokinetic Models to In Vivo PK Data Sets
 Version: 2.0.3
 Date: 2025-9-9
-Authors@R: c(person("John", "Wambaugh", email = "wambaugh.research@gmail.com", 
-             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4024-534X")),
-             person("Caroline", "Ring", email = "Ring.Caroline@epa.gov", 
+Authors@R: c(person("Caroline", "Ring", email = "Ring.Caroline@epa.gov", 
              role = c("aut"), comment = c(ORCID = "0000-0002-0463-1251")),
+             person("John", "Wambaugh", email = "wambaugh.research@gmail.com", 
+             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4024-534X")),
              person("Gilberto", "Padilla Mercado", role = c("aut"),
              comment = c(ORCID = "0000-0001-5423-1646")),
              person("Chris", "Cook", role = c("aut"))
