@@ -1,8 +1,8 @@
 ---
-title: "User Guide"
+title: "invivoPKfit Supplemental User Guide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{invivoPKfit User Guide}
+  %\VignetteIndexEntry{invivoPKfit Supplemental User Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -55,7 +55,7 @@ For the sake of keeping run time reasonable, this example will include data on o
 ```{r}
 #select data for a single chemical and species
 my_data <- subset(cvt,
-                 analyte_dtxsid %in% c("DTXSID8031865",
+                 analyzed_chem_dtxsid %in% c("DTXSID8031865",
                                             "DTXSID0020442")
                  )
 ```
