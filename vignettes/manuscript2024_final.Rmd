@@ -3295,6 +3295,10 @@ saveRDS(
 Get TK statistics for the winning models. Do them dose-normalized so that they won't vary by dose. Keep only halflife and Vss, which shouldn't vary by Route and Media.
 
 ```{r}
+pk_study <- readRDS(paste0(Sys.getenv("OD_DIR"),
+               '28February2025',
+               "studylevel_pk_fit_110p.Rds"))
+
 tkstats_study <- eval_tkstats(pk_study,
   finite_only = FALSE,
   dose_norm = TRUE,

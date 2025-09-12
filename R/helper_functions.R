@@ -55,7 +55,6 @@ force_ascii_quotes <- function(x) {
 
 
 
-
 #' Creating a simple test CvT dataset
 #'
 #' @param params A named numeric vector of model parameter values.

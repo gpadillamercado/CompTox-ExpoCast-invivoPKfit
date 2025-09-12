@@ -35,7 +35,7 @@ Imports:
     optimx,
     PK,
     pracma,
-    purrr (>= 1.1.0),
+    purrr,
     rlang,
     stats,
     scales,
