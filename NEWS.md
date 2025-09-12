@@ -1,3 +1,8 @@
+# invivoPKfit 2.0.3
+
+* Updated method fit_sigma, which allows users to optimize sigma hyperparameter(s)
+using external concentration versus time predictions and calculate log-likelihood.
+
 # invivoPKfit 2.0.2
 
 * Minor bug fix for adjusting rate constants after fitting to standard "1/hour".  

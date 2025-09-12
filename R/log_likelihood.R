@@ -156,10 +156,7 @@ log_likelihood <- function(par,
   # Fix any NA in N_Subjects and Detect as we do in do_preprocess.pk()
   N_Subjects[is.na(N_Subjects)] <- 1.0
   Detect[is.na(Detect)] <- FALSE
-  # Fix the modelfun_args and modelfun variables
-  modelfun_args <- modelfun[["conc_fun_args"]]
-  optimized_args <- modelfun$optimize_fun_args
-  modelfun <- modelfun[["conc_fun"]]
+
 
   # combine parameters to be optimized and held constant
   params <- c(par, const_params)
@@ -173,6 +170,10 @@ log_likelihood <- function(par,
     stopifnot("data must have Conc_est column." = "Conc_est" %in% names(data))
     pred <- data$Conc_est
   } else {
+    # modelfun_args and modelfun variables only set when not already predicted
+    modelfun_args <- modelfun[["conc_fun_args"]]
+    optimized_args <- modelfun$optimize_fun_args
+    modelfun <- modelfun[["conc_fun"]]
     # assemble arguments for do.call
     if (!is.list(modelfun_args)) {
       modelfun_args <- as.list(modelfun_args)
