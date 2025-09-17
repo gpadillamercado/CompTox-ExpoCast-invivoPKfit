@@ -22,10 +22,6 @@
 #' @param x A character vector that may have some special characters.
 #'
 #' @returns Character vector with converted characters.
-#'
-#' @examples
-#' try(cat(invivoPKfit:::force_ascii_quotes("3,3’,4,4′-tetrachloro-5-biphenylol")))
-#'
 force_ascii_quotes <- function(x) {
   single_quote_chars <- c("\x91", "\x92", "\xB4")
   double_quote_chars <- c("\x93", "\x94")
@@ -56,7 +52,6 @@ force_ascii_quotes <- function(x) {
   # Encoding(temp) <- "latin1"
   return(temp)
 }
-
 
 
 

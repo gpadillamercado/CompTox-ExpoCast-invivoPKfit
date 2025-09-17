@@ -1,22 +1,22 @@
 Type: Package
 Package: invivoPKfit
 Title: Fits Toxicokinetic Models to In Vivo PK Data Sets
-Version: 2.0.2
-Date: 2025-8-22
-Authors@R: c(person("John", "Wambaugh", email = "wambaugh.john@epa.gov", 
-             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4024-534X")),
+Version: 2.0.3
+Date: 2025-9-9
+Authors@R: c(person("John", "Wambaugh", email = "wambaugh.research@gmail.com", 
+             role = c("aut"), comment = c(ORCID = "0000-0002-4024-534X")),
              person("Caroline", "Ring", email = "Ring.Caroline@epa.gov", 
-             role = c("aut"), comment = c(ORCID = "0000-0002-0463-1251")),
+             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0463-1251")),
              person("Gilberto", "Padilla Mercado", role = c("aut"),
              comment = c(ORCID = "0000-0001-5423-1646")),
              person("Chris", "Cook", role = c("aut"))
              )
 Author: 
-  John Wambaugh [aut, cre] (<https://orcid.org/0000-0002-4024-534X>),
-  Caroline Ring [aut] (<https://orcid.org/0000-0002-0463-1251>),
+  John Wambaugh [aut] (<https://orcid.org/0000-0002-4024-534X>),
+  Caroline Ring [aut, cre] (<https://orcid.org/0000-0002-0463-1251>),
   Gilberto Padilla Mercado [aut] (<https://orcid.org/0000-0001-5423-1646>),
   Chris Cook [aut]
-Maintainer: John Wambaugh <wambaugh.john@epa.gov>
+Maintainer: Caroline Ring <ring.caroline@epa.gov>
 Description: Takes in vivo toxicokinetic concentration-time data and fits
     parameters of 1-compartment and 2-compartment models for each
     chemical. These methods are described in detail in "Informatics for Toxicokinetics" (2025).
@@ -35,7 +35,7 @@ Imports:
     optimx,
     PK,
     pracma,
-    purrr (>= 1.1.0),
+    purrr,
     rlang,
     stats,
     scales,

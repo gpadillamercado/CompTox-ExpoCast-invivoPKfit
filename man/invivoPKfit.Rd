@@ -11,11 +11,11 @@ and NHEERL, and fits parameters of 1-compartment and 2-compartment models
 for each chemical.
 }
 \author{
-\strong{Maintainer}: John Wambaugh \email{wambaugh.john@epa.gov} (\href{https://orcid.org/0000-0002-4024-534X}{ORCID})
+\strong{Maintainer}: Caroline Ring \email{Ring.Caroline@epa.gov} (\href{https://orcid.org/0000-0002-0463-1251}{ORCID})
 
 Authors:
 \itemize{
-  \item Caroline Ring \email{Ring.Caroline@epa.gov} (\href{https://orcid.org/0000-0002-0463-1251}{ORCID})
+  \item John Wambaugh \email{wambaugh.research@gmail.com} (\href{https://orcid.org/0000-0002-4024-534X}{ORCID})
   \item Gilberto Padilla Mercado (\href{https://orcid.org/0000-0001-5423-1646}{ORCID})
   \item Chris Cook
 }
